@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+  background: wheat;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.contain {
+  margin: 40px;
+  
+}
+
+p {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  line-height: 1.3em;
+
+}
+  
+  .drop {
+    display: inline-block;
+    min-width: 90px;
+    padding-top: 18px;  
+    border-bottom: 1px solid;
+    vertical-align: bottom;
+  }
+
+.draggable {
+  font-size: 1.2em;
+  list-style: initial;
+}
+  
+  li {
+    margin-bottom: 10px;
+  }
+    
+    span {
+      cursor: move;
+      display: inline-block;
+    }
+  
+    </style>
+</head>
+<body>
+    <div class="contain">
+        <p>Lorem ipsum dolor sit amet, consectetur <span class="drop" data-target="drop1"></span> adipisicing elit. Rerum, ipsa quos excepturi ex? Iste nesciunt, magni molestias <span class="drop" data-target="drop2"></span> dignissimos ea iusto praesentium totam, repellat aliquid deleniti minima eum aliquam voluptatibus <span class="drop" data-target="drop3"></span> consequuntur.</p>
+        
+        <ul class="draggable">
+          <li><span class="drop1">Word 1</span></li>
+          <li><span class="drop2">Word 2</span></li>
+          <li><span class="drop3">Word 3</span></li>
+        </ul>
+      </div>
+    <script>
+        
+
+$('.draggable span').draggable({ revert: true });
+
+$('.drop').droppable({
+  tolerance: "touch",
+  drop: function(event, ui){
+    if (($(ui.draggable[0]).hasClass($(this).data('target')))) {
+      $(this).html(ui.draggable.html()).css({'border':'none', 'width':'auto', 'padding-top': '0'});
+      ui.draggable.parent().remove();
+      
+      if (($('.draggable span').length) === 0) {
+        var welldone = '<p>Well done!</p>'
+        $(welldone).hide().appendTo('.contain').fadeIn();
+      }
+    }
+  }
+});
+    </script>
+</body>
+</html>
